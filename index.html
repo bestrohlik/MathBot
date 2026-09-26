@@ -1,523 +1,664 @@
 <!DOCTYPE html>
-
 <html lang="cs">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MathBot — Matematika jednoduše</title>
-
-<link rel="icon" type="image/x-icon" href="icon.ico">
-
-<style>
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        color: white;
-        background: #080808;
-        overflow-x: hidden;
-    }
-
-    /* =========================
-       BACKGROUND
-    ========================= */
-
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-
-        background:
-            linear-gradient(
-                rgba(0, 0, 0, 0.65),
-                rgba(0, 0, 0, 0.85)
-            ),
-            url("background.gif");
-
-        background-size: cover;
-        background-position: center;
-
-        z-index: -2;
-    }
-
-    body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-
-        background: radial-gradient(
-            circle at center,
-            transparent,
-            rgba(0, 0, 0, 0.5)
-        );
-
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    /* =========================
-       NAVBAR
-    ========================= */
-
-    nav {
-        position: fixed;
-
-        top: 0;
-        left: 0;
-        right: 0;
-
-        height: 70px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 0 7%;
-
-        background: rgba(10, 10, 10, 0.75);
-
-        backdrop-filter: blur(15px);
-
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-
-        z-index: 100;
-    }
-
-    .logo {
-        font-size: 24px;
-        font-weight: bold;
-
-        white-space: nowrap;
-    }
-
-    .logo span {
-        font-size: 13px;
-        opacity: 0.5;
-        margin-left: 5px;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 25px;
-    }
-
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-
-        font-size: 16px;
-        font-weight: bold;
-
-        opacity: 0.75;
-
-        transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-        opacity: 1;
-        transform: translateY(-2px);
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-        min-height: 100vh;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        text-align: center;
-
-        padding: 120px 20px 80px;
-    }
-
-    .hero-content {
-        max-width: 850px;
-    }
-
-    .badge {
-        display: inline-block;
-
-        padding: 9px 18px;
-
-        margin-bottom: 25px;
-
-        border-radius: 50px;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
-        font-size: 14px;
-
-        backdrop-filter: blur(10px);
-    }
-
-    h1 {
-        font-size: clamp(60px, 11vw, 110px);
-
-        margin-bottom: 20px;
-
-        letter-spacing: -4px;
-
-        background: linear-gradient(
-            90deg,
-            white,
-            #bdbdbd
-        );
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero-description {
-        font-size: 22px;
-
-        line-height: 1.6;
-
-        color: rgba(255, 255, 255, 0.7);
-
-        margin-bottom: 35px;
-    }
-
-    /* =========================
-       BUTTONS
-    ========================= */
-
-    .buttons {
-        display: flex;
-
-        justify-content: center;
-
-        gap: 15px;
-
-        flex-wrap: wrap;
-    }
-
-    .button {
-        display: inline-block;
-
-        padding: 15px 28px;
-
-        border-radius: 12px;
-
-        text-decoration: none;
-
-        font-size: 17px;
-
-        font-weight: bold;
-
-        transition: 0.25s;
-    }
-
-    .primary {
-        color: black;
-        background: white;
-
-        box-shadow:
-            0 10px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .secondary {
-        color: white;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
-        backdrop-filter: blur(10px);
-    }
-
-    .button:hover {
-        transform: translateY(-4px) scale(1.02);
-    }
-
-    /* =========================
-       SECTIONS
-    ========================= */
-
-    section {
-        scroll-margin-top: 90px;
-    }
-
-    .section {
-        max-width: 1200px;
-
-        margin: auto;
-
-        padding: 100px 30px;
-    }
-
-    .section-title {
-        text-align: center;
-
-        font-size: 42px;
-
-        margin-bottom: 15px;
-    }
-
-    .section-description {
-        text-align: center;
-
-        color: rgba(255, 255, 255, 0.6);
-
-        margin-bottom: 50px;
-
-        font-size: 18px;
-    }
-
-    /* =========================
-       FEATURES
-    ========================= */
-
-    .cards {
-        display: grid;
-
-        grid-template-columns:
-            repeat(auto-fit, minmax(220px, 1fr));
-
-        gap: 20px;
-    }
-
-    .card {
-        padding: 30px;
-
-        min-height: 200px;
-
-        background: rgba(255, 255, 255, 0.07);
-
-        border: 1px solid rgba(255, 255, 255, 0.13);
-
-        border-radius: 22px;
-
-        backdrop-filter: blur(15px);
-
-        transition: 0.25s;
-    }
-
-    .card:hover {
-        transform: translateY(-8px);
-
-        background: rgba(255, 255, 255, 0.11);
-
-        border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .card-icon {
-        font-size: 40px;
-
-        margin-bottom: 18px;
-    }
-
-    .card h3 {
-        font-size: 22px;
-
-        margin-bottom: 12px;
-    }
-
-    .card p {
-        color: rgba(255, 255, 255, 0.6);
-
-        line-height: 1.5;
-    }
-
-    /* =========================
-       DOWNLOAD
-    ========================= */
-
-    .download-section {
-        max-width: 800px;
-
-        margin: auto;
-
-        padding: 100px 30px;
-
-        text-align: center;
-    }
-
-    .download-box {
-        padding: 55px 30px;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        border: 1px solid rgba(255, 255, 255, 0.15);
-
-        border-radius: 25px;
-
-        backdrop-filter: blur(15px);
-
-        box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-
-    .download-box h2 {
-        font-size: 38px;
-
-        margin-bottom: 15px;
-    }
-
-    .download-box p {
-        color: rgba(255, 255, 255, 0.6);
-
-        font-size: 18px;
-
-        line-height: 1.5;
-
-        margin-bottom: 30px;
-    }
-
-    .version {
-        margin-top: 20px;
-
-        font-size: 14px;
-
-        color: rgba(255, 255, 255, 0.4);
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-        text-align: center;
-
-        padding: 35px 20px;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-        color: rgba(255, 255, 255, 0.45);
-
-        font-size: 14px;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 650px) {
+    <title>MathBot — Matematika jednoduše</title>
+
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            background: #080808;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.65),
+                    rgba(0, 0, 0, 0.85)
+                ),
+                url("background.gif");
+
+            background-size: cover;
+            background-position: center;
+
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background: radial-gradient(
+                circle at center,
+                transparent,
+                rgba(0, 0, 0, 0.5)
+            );
+
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
 
         nav {
-            padding: 0 15px;
+            position: fixed;
 
-            height: auto;
+            top: 0;
+            left: 0;
+            right: 0;
 
-            min-height: 70px;
+            height: 70px;
 
-            flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            justify-content: center;
+            padding: 0 7%;
 
-            gap: 10px;
+            background: rgba(10, 10, 10, 0.75);
 
-            padding-top: 10px;
-            padding-bottom: 10px;
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            font-size: 13px;
+            opacity: 0.5;
+            margin-left: 5px;
         }
 
         .nav-links {
-            gap: 15px;
+            display: flex;
+            gap: 25px;
         }
 
         .nav-links a {
-            font-size: 14px;
+            color: white;
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            opacity: 0.75;
+
+            transition: 0.2s;
         }
 
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
-            padding-top: 150px;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 120px 20px 80px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 9px 18px;
+            margin-bottom: 25px;
+
+            border-radius: 50px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            font-size: 14px;
+
+            backdrop-filter: blur(10px);
         }
 
         h1 {
-            letter-spacing: -2px;
+            font-size: clamp(60px, 11vw, 110px);
+
+            margin-bottom: 20px;
+
+            letter-spacing: -4px;
+
+            background: linear-gradient(
+                90deg,
+                white,
+                #bdbdbd
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-description {
-            font-size: 18px;
+            font-size: 22px;
+
+            line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.7);
+
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 15px 28px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .primary {
+            color: black;
+            background: white;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .secondary {
+            color: white;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .button:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        section {
+            scroll-margin-top: 90px;
+        }
+
+        .section {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 100px 30px;
         }
 
         .section-title {
-            font-size: 32px;
+            text-align: center;
+
+            font-size: 42px;
+
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            text-align: center;
+
+            color: rgba(255, 255, 255, 0.6);
+
+            margin-bottom: 50px;
+
+            font-size: 18px;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 20px;
+        }
+
+        .card {
+            padding: 30px;
+
+            min-height: 200px;
+
+            background: rgba(255, 255, 255, 0.07);
+
+            border: 1px solid rgba(255, 255, 255, 0.13);
+
+            border-radius: 22px;
+
+            backdrop-filter: blur(15px);
+
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+
+            background: rgba(255, 255, 255, 0.11);
+
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .card-icon {
+            font-size: 40px;
+
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.6);
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           DOWNLOAD
+        ========================= */
+
+        .download-section {
+            max-width: 800px;
+
+            margin: auto;
+
+            padding: 100px 30px;
+
+            text-align: center;
+        }
+
+        .download-box {
+            padding: 55px 30px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            border-radius: 25px;
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .download-box h2 {
-            font-size: 30px;
+            font-size: 38px;
+
+            margin-bottom: 15px;
         }
 
-    }
+        .download-box p {
+            color: rgba(255, 255, 255, 0.6);
 
-</style>
-```
+            font-size: 18px;
 
+            line-height: 1.5;
+
+            margin-bottom: 30px;
+        }
+
+        .version {
+            margin-top: 20px;
+
+            font-size: 14px;
+
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 35px 20px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+            color: rgba(255, 255, 255, 0.45);
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            nav {
+                padding: 10px 15px;
+
+                height: auto;
+                min-height: 70px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                gap: 10px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding-top: 150px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .download-box h2 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-```
-<!-- =========================
-     NAVBAR
-========================= -->
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-<nav>
+    <nav>
 
-    <div class="logo">
-        🤖 MathBot
-        <span>V1</span>
-    </div>
-
-    <div class="nav-links">
-
-        <a href="#funkce">
-            Funkce
-        </a>
-
-        <a href="#download">
-            Download
-        </a>
-
-        <a href="https://github.com/bestrohlik">
-            GitHub
-        </a>
-
-    </div>
-
-</nav>
-
-
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="hero">
-
-    <div class="hero-content">
-
-        <div class="badge">
-            🚀 MathBot V1
+        <div class="logo">
+            🤖 MathBot
+            <span>V1</span>
         </div>
 
-        <h1>
-            MathBot
-        </h1>
+        <div class="nav-links">
 
-        <p class="hero-description">
-            Tvůj matematický pomocník.
-            <br>
-            Jednoduše. Rychle. Bez zbytečností.
+            <a href="#funkce">
+                Funkce
+            </a>
+
+            <a href="#download">
+                Download
+            </a>
+
+            <a href="https://github.com/bestrohlik">
+                GitHub
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🚀 MathBot V1
+            </div>
+
+            <h1>
+                MathBot
+            </h1>
+
+            <p class="hero-description">
+                Tvůj matematický pomocník.
+                <br>
+                Jednoduše. Rychle. Bez zbytečností.
+            </p>
+
+            <div class="buttons">
+
+                <a
+                    class="button primary"
+                    href="MathBot.zip"
+                    download
+                >
+                    ⬇️ Stáhnout MathBot
+                </a>
+
+                <a
+                    class="button secondary"
+                    href="#funkce"
+                >
+                    🔍 Zjistit více
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURES
+    ========================= -->
+
+    <section
+        class="section"
+        id="funkce"
+    >
+
+        <h2 class="section-title">
+            Co MathBot umí?
+        </h2>
+
+        <p class="section-description">
+            Funkce dostupné v MathBotu.
         </p>
 
-        <div class="buttons">
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="card-icon">
+                    🧮
+                </div>
+
+                <h3>
+                    Kalkulačka
+                </h3>
+
+                <p>
+                    Rychlé matematické výpočty.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ✖️
+                </div>
+
+                <h3>
+                    Násobilkovač
+                </h3>
+
+                <p>
+                    Procvičování násobilky.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    📝
+                </div>
+
+                <h3>
+                    Příklady
+                </h3>
+
+                <p>
+                    Řeš náhodné matematické příklady.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    ⭐
+                </div>
+
+                <h3>
+                    XP systém
+                </h3>
+
+                <p>
+                    Získávej XP za vyřešené příklady.
+                    +140 XP na začátek.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Statistiky
+                </h3>
+
+                <p>
+                    Sleduj svůj pokrok a výsledky.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DOWNLOAD
+    ========================= -->
+
+    <section
+        class="download-section"
+        id="download"
+    >
+
+        <div class="download-box">
+
+            <h2>
+                Stáhni si MathBot
+            </h2>
+
+            <p>
+                Vyzkoušej MathBot na svém počítači
+                a začni procvičovat matematiku.
+            </p>
 
             <a
                 class="button primary"
@@ -527,72 +668,25 @@
                 ⬇️ Stáhnout MathBot
             </a>
 
-            <a
-                class="button secondary"
-                href="#funkce"
-            >
-                🔍 Zjistit více
-            </a>
+            <div class="version">
+                MathBot V1 • PC
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =========================
-     FEATURES
-========================= -->
+    <!-- =========================
+         FOOTER
+    ========================= -->
 
-<section
-    class="section"
-    id="funkce"
->
+    <footer>
 
-    <h2 class="section-title">
-        Co MathBot umí?
-    </h2>
+        © 2026 MathBot • Vytvořil Bestrohlík
 
-    <p class="section-description">
-        Funkce dostupné v MathBotu.
-    </p>
-<section id="funkce" class="features">
+    </footer>
 
-    <h2>Co MathBot umí?</h2>
+</body>
 
-    <div class="cards">
-
-        <div class="card">
-            <div class="icon">🧮</div>
-            <h3>Kalkulačka</h3>
-            <p>Rychlé matematické výpočty.</p>
-        </div>
-
-        <div class="card">
-            <div class="icon">✖️</div>
-            <h3>Násobilkovač</h3>
-            <p>Procvičování násobilky.</p>
-        </div>
-
-        <div class="card">
-            <div class="icon">📝</div>
-            <h3>Příklady</h3>
-            <p>Řeš náhodné matematické příklady.</p>
-        </div>
-
-        <div class="card">
-            <div class="icon">⭐</div>
-            <h3>XP systém</h3>
-            <p>Získávej XP za vyřešené příklady. + 140 XP na začátek</p>
-        </div>
-
-        <div class="card">
-            <div class="icon">📊</div>
-            <h3>Statistiky</h3>
-            <p>Sleduj svůj pokrok a výsledky.</p>
-        </div>
-
-    </div>
-
-</section>
+</html>
