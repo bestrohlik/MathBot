@@ -1,860 +1,552 @@
 <!DOCTYPE html>
-
 <html lang="cs">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MathBot — Matematika jednodušeji</title>
-
-<link rel="icon" type="image/x-icon" href="icon.ico">
-
-<style>
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        color: white;
-        background: #080808;
-        overflow-x: hidden;
-    }
-
-    /* =========================
-       NAVBAR
-    ========================= */
-
-    nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 70px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 0 7%;
-
-        background: rgba(10, 10, 10, 0.75);
-        backdrop-filter: blur(15px);
-
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-
-        z-index: 100;
-    }
-
-    .logo {
-        font-size: 24px;
-        font-weight: bold;
-        white-space: nowrap;
-
-        cursor: pointer;
-
-        position: relative;
-    }
-
-    .logo span {
-        font-size: 13px;
-        opacity: 0.5;
-        margin-left: 5px;
-    }
-
-    /* =========================
-       LANGUAGE MENU
-    ========================= */
-
-    .language-menu {
-        position: absolute;
-
-        top: 45px;
-        left: 0;
-
-        min-width: 180px;
-
-        padding: 8px;
-
-        background: rgba(20, 20, 20, 0.95);
-
-        border: 1px solid rgba(255, 255, 255, 0.15);
-
-        border-radius: 14px;
-
-        backdrop-filter: blur(20px);
-
-        box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.5);
-
-        display: none;
-    }
-
-    .language-menu.show {
-        display: block;
-    }
-
-    .language-option {
-        width: 100%;
-
-        padding: 11px 14px;
-
-        border: none;
-
-        border-radius: 9px;
-
-        background: transparent;
-
-        color: white;
-
-        text-align: left;
-
-        font-size: 15px;
-
-        cursor: pointer;
-
-        transition: 0.2s;
-    }
-
-    .language-option:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .language-option.active {
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    /* =========================
-       NAV LINKS
-    ========================= */
-
-    .nav-links {
-        display: flex;
-        gap: 25px;
-    }
-
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-
-        font-size: 16px;
-        font-weight: bold;
-
-        opacity: 0.75;
-
-        transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-        opacity: 1;
-        transform: translateY(-2px);
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-        min-height: 100vh;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        text-align: center;
-
-        padding: 120px 20px 80px;
-    }
-
-    .hero-content {
-        max-width: 850px;
-    }
-
-    .badge {
-        display: inline-block;
-
-        padding: 9px 18px;
-        margin-bottom: 25px;
-
-        border-radius: 50px;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
-        font-size: 14px;
-
-        backdrop-filter: blur(10px);
-    }
-
-    h1 {
-        font-size: clamp(60px, 11vw, 110px);
-
-        margin-bottom: 20px;
-
-        letter-spacing: -4px;
-
-        background: linear-gradient(
-            90deg,
-            white,
-            #bdbdbd
-        );
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero-description {
-        font-size: 22px;
-
-        line-height: 1.6;
-
-        color: rgba(255, 255, 255, 0.7);
-
-        margin-bottom: 35px;
-    }
-
-    /* =========================
-       BUTTONS
-    ========================= */
-
-    .buttons {
-        display: flex;
-
-        justify-content: center;
-
-        gap: 15px;
-
-        flex-wrap: wrap;
-    }
-
-    .button {
-        display: inline-block;
-
-        padding: 15px 28px;
-
-        border-radius: 12px;
-
-        text-decoration: none;
-
-        font-size: 17px;
-
-        font-weight: bold;
-
-        transition: 0.25s;
-    }
-
-    .primary {
-        color: black;
-        background: white;
-
-        box-shadow:
-            0 10px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .secondary {
-        color: white;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
-        backdrop-filter: blur(10px);
-    }
-
-    .button:hover {
-        transform: translateY(-4px) scale(1.02);
-    }
-
-    /* =========================
-       SECTIONS
-    ========================= */
-
-    section {
-        scroll-margin-top: 90px;
-    }
-
-    .section {
-        max-width: 1200px;
-
-        margin: auto;
-
-        padding: 100px 30px;
-    }
-
-    .section-title {
-        text-align: center;
-
-        font-size: 42px;
-
-        margin-bottom: 15px;
-    }
-
-    .section-description {
-        text-align: center;
-
-        color: rgba(255, 255, 255, 0.6);
-
-        margin-bottom: 50px;
-
-        font-size: 18px;
-    }
-
-    /* =========================
-       FEATURES
-    ========================= */
-
-    .cards {
-        display: grid;
-
-        grid-template-columns:
-            repeat(auto-fit, minmax(220px, 1fr));
-
-        gap: 20px;
-    }
-
-    .card {
-        padding: 30px;
-
-        min-height: 200px;
-
-        background: rgba(255, 255, 255, 0.07);
-
-        border: 1px solid rgba(255, 255, 255, 0.13);
-
-        border-radius: 22px;
-
-        backdrop-filter: blur(15px);
-
-        transition: 0.25s;
-    }
-
-    .card:hover {
-        transform: translateY(-8px);
-
-        background: rgba(255, 255, 255, 0.11);
-
-        border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .card-icon {
-        font-size: 40px;
-
-        margin-bottom: 18px;
-    }
-
-    .card h3 {
-        font-size: 22px;
-
-        margin-bottom: 12px;
-    }
-
-    .card p {
-        color: rgba(255, 255, 255, 0.6);
-
-        line-height: 1.5;
-    }
-
-    /* =========================
-       DOWNLOAD
-    ========================= */
-
-    .download-section {
-        max-width: 800px;
-
-        margin: auto;
-
-        padding: 100px 30px;
-
-        text-align: center;
-    }
-
-    .download-box {
-        padding: 55px 30px;
-
-        background: rgba(255, 255, 255, 0.08);
-
-        border: 1px solid rgba(255, 255, 255, 0.15);
-
-        border-radius: 25px;
-
-        backdrop-filter: blur(15px);
-
-        box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-
-    .download-box h2 {
-        font-size: 38px;
-
-        margin-bottom: 15px;
-    }
-
-    .download-box p {
-        color: rgba(255, 255, 255, 0.6);
-
-        font-size: 18px;
-
-        line-height: 1.5;
-
-        margin-bottom: 30px;
-    }
-
-    .version {
-        margin-top: 20px;
-
-        font-size: 14px;
-
-        color: rgba(255, 255, 255, 0.4);
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-        text-align: center;
-
-        padding: 35px 20px;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-        color: rgba(255, 255, 255, 0.45);
-
-        font-size: 14px;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 650px) {
-
-        nav {
-            padding: 10px 15px;
-
-            height: auto;
-            min-height: 70px;
-
-            flex-wrap: wrap;
-
-            justify-content: center;
-
-            gap: 10px;
+    <title>MathBot — Matematika jednodušeji</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            background: #080808;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            white-space: nowrap;
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        .logo span {
+            font-size: 13px;
+            opacity: 0.5;
+            margin-left: 5px;
+        }
+
+        /* =========================
+           LANGUAGE MENU
+        ========================= */
+
+        .language-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            width: max-content;
+            min-width: 200px;
+            padding: 8px;
+            background: #141414;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .language-menu.show {
+            display: flex;
+        }
+
+        .language-option {
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: white;
+            text-align: left;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-option.active {
+            background: rgba(255, 255, 255, 0.18);
+            font-weight: bold;
+        }
+
+        /* =========================
+           NAV LINKS
+        ========================= */
+
         .nav-links {
-            gap: 15px;
+            display: flex;
+            gap: 25px;
         }
 
         .nav-links a {
-            font-size: 14px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            opacity: 0.75;
+            transition: 0.2s;
         }
 
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
-            padding-top: 150px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 9px 18px;
+            margin-bottom: 25px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 14px;
+            backdrop-filter: blur(10px);
         }
 
         h1 {
-            letter-spacing: -2px;
+            font-size: clamp(60px, 11vw, 110px);
+            margin-bottom: 20px;
+            letter-spacing: -4px;
+            background: linear-gradient(90deg, white, #bdbdbd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero-description {
-            font-size: 18px;
+            font-size: 22px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+
+        .primary {
+            color: black;
+            background: white;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .secondary {
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(10px);
+        }
+
+        .button:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        section {
+            scroll-margin-top: 90px;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 100px 30px;
         }
 
         .section-title {
-            font-size: 32px;
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            padding: 30px;
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 22px;
+            backdrop-filter: blur(15px);
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.11);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+
+        /* =========================
+           DOWNLOAD
+        ========================= */
+
+        .download-section {
+            max-width: 800px;
+            margin: auto;
+            padding: 100px 30px;
+            text-align: center;
+        }
+
+        .download-box {
+            padding: 55px 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .download-box h2 {
-            font-size: 30px;
+            font-size: 38px;
+            margin-bottom: 15px;
         }
 
-    }
+        .download-box p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
 
-</style>
-```
+        .version {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
 
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+            nav {
+                padding: 10px 15px;
+                height: auto;
+                min-height: 70px;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding-top: 150px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .download-box h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-```
 <!-- =========================
      NAVBAR
 ========================= -->
 
 <nav>
-
     <div class="logo" onclick="toggleLanguageMenu()">
-
         🚀 MathBot
         <span id="languageLabel">V1 CZ</span>
 
-        <div
-            class="language-menu"
-            id="languageMenu"
-        >
-
-            <button
-                class="language-option active"
-                id="czOption"
-                onclick="selectLanguage('CZ', event)"
-            >
+        <div class="language-menu" id="languageMenu">
+            <button class="language-option active" id="czOption" onclick="selectLanguage('CZ', event)">
                 🇨🇿 MathBot V1 CZ
             </button>
-
-            <button
-                class="language-option"
-                id="enOption"
-                onclick="selectLanguage('EN', event)"
-            >
+            <button class="language-option" id="enOption" onclick="selectLanguage('EN', event)">
                 🇬🇧 MathBot V1 EN
             </button>
-
         </div>
-
     </div>
-
 
     <div class="nav-links">
-
-        <a href="#funkce">
-            Funkce
-        </a>
-
-        <a href="#download">
-            Download
-        </a>
-
-        <a
-            href="https://github.com/bestrohlik"
-            target="_blank"
-        >
-            GitHub
-        </a>
-
+        <a href="#funkce">Funkce</a>
+        <a href="#download">Download</a>
+        <a href="https://github.com/bestrohlik" target="_blank">GitHub</a>
     </div>
-
 </nav>
-
 
 <!-- =========================
      HERO
 ========================= -->
 
 <section class="hero">
-
     <div class="hero-content">
-
-        <div class="badge">
-            🚀 MathBot V1
-        </div>
-
-        <h1>
-            MathBot
-        </h1>
-
+        <div class="badge">🚀 MathBot V1</div>
+        <h1>MathBot</h1>
         <p class="hero-description">
-            Tvůj matematický pomocník.
-            <br>
+            Tvůj matematický pomocník.<br>
             Jednoduše. Rychle. Offline. Bez zbytečností.
         </p>
 
         <div class="buttons">
-
-            <a
-                class="button primary"
-                id="heroDownload"
-                href="MathBot.zip"
-                download
-            >
+            <a class="button primary" id="heroDownload" href="MathBot.zip" download>
                 ⬇️ Stáhnout MathBot V1 CZ
             </a>
-
-            <a
-                class="button secondary"
-                href="#funkce"
-            >
+            <a class="button secondary" href="#funkce">
                 🔍 Zjistit více
             </a>
-
         </div>
-
     </div>
-
 </section>
-
 
 <!-- =========================
      FEATURES
 ========================= -->
 
-<section
-    class="section"
-    id="funkce"
->
-
-    <h2 class="section-title">
-        Co MathBot umí?
-    </h2>
-
-    <p class="section-description">
-        Funkce dostupné v MathBotu.
-    </p>
+<section class="section" id="funkce">
+    <h2 class="section-title">Co MathBot umí?</h2>
+    <p class="section-description">Funkce dostupné v MathBotu.</p>
 
     <div class="cards">
-
         <div class="card">
-
-            <div class="card-icon">
-                🧮
-            </div>
-
-            <h3>
-                Kalkulačka
-            </h3>
-
-            <p>
-                Rychlé matematické výpočty.
-            </p>
-
+            <div class="card-icon">🧮</div>
+            <h3>Kalkulačka</h3>
+            <p>Rychlé matematické výpočty.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                ✖️
-            </div>
-
-            <h3>
-                Násobilkovač
-            </h3>
-
-            <p>
-                Procvičování násobilky.
-            </p>
-
+            <div class="card-icon">✖️</div>
+            <h3>Násobilkovač</h3>
+            <p>Procvičování násobilky.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                📝
-            </div>
-
-            <h3>
-                Příklady
-            </h3>
-
-            <p>
-                Řeš náhodné matematické příklady.
-            </p>
-
+            <div class="card-icon">📝</div>
+            <h3>Příklady</h3>
+            <p>Řeš náhodné matematické příklady.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                ⭐
-            </div>
-
-            <h3>
-                XP systém
-            </h3>
-
-            <p>
-                Získávej XP za vyřešené příklady.
-                \+ 140 XP na začátek.
-            </p>
-
+            <div class="card-icon">⭐</div>
+            <h3>XP systém</h3>
+            <p>Získávej XP za vyřešené příklady. +140 XP na začátek.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                📊
-            </div>
-
-            <h3>
-                Statistiky
-            </h3>
-
-            <p>
-                Sleduj svůj pokrok a výsledky.
-            </p>
-
+            <div class="card-icon">📊</div>
+            <h3>Statistiky</h3>
+            <p>Sleduj svůj pokrok a výsledky.</p>
         </div>
-
     </div>
-
 </section>
-
 
 <!-- =========================
      DOWNLOAD
 ========================= -->
 
-<section
-    class="download-section"
-    id="download"
->
-
+<section class="download-section" id="download">
     <div class="download-box">
+        <h2>Stáhni si MathBot</h2>
+        <p>Vyzkoušej MathBot na svém počítači a začni procvičovat.</p>
 
-        <h2>
-            Stáhni si MathBot
-        </h2>
-
-        <p>
-            Vyzkoušej MathBot na svém počítači
-            a začni procvičovat.
-        </p>
-
-        <a
-            class="button primary"
-            id="downloadButton"
-            href="MathBot.zip"
-            download
-        >
+        <a class="button primary" id="downloadButton" href="MathBot.zip" download>
             ⬇️ Stáhnout MathBot V1 CZ
         </a>
 
         <div class="version">
             MathBot V1 • <span id="versionLanguage">CZ</span> • PC
         </div>
-
     </div>
-
 </section>
-
 
 <!-- =========================
      JAVASCRIPT
 ========================= -->
 
 <script>
-
     let selectedLanguage = "CZ";
 
-
     function toggleLanguageMenu() {
-
-        const menu =
-            document.getElementById("languageMenu");
-
+        const menu = document.getElementById("languageMenu");
         menu.classList.toggle("show");
-
     }
-
 
     function selectLanguage(language, event) {
-
         event.stopPropagation();
-
         selectedLanguage = language;
 
-        const languageLabel =
-            document.getElementById("languageLabel");
-
-        const heroDownload =
-            document.getElementById("heroDownload");
-
-        const downloadButton =
-            document.getElementById("downloadButton");
-
-        const versionLanguage =
-            document.getElementById("versionLanguage");
-
-        const czOption =
-            document.getElementById("czOption");
-
-        const enOption =
-            document.getElementById("enOption");
-
+        const languageLabel = document.getElementById("languageLabel");
+        const heroDownload = document.getElementById("heroDownload");
+        const downloadButton = document.getElementById("downloadButton");
+        const versionLanguage = document.getElementById("versionLanguage");
+        const czOption = document.getElementById("czOption");
+        const enOption = document.getElementById("enOption");
 
         if (language === "CZ") {
-
             languageLabel.textContent = "V1 CZ";
-
             heroDownload.href = "MathBot.zip";
             downloadButton.href = "MathBot.zip";
-
-            heroDownload.textContent =
-                "⬇️ Stáhnout MathBot V1 CZ";
-
-            downloadButton.textContent =
-                "⬇️ Stáhnout MathBot V1 CZ";
-
+            heroDownload.textContent = "⬇️ Stáhnout MathBot V1 CZ";
+            downloadButton.textContent = "⬇️ Stáhnout MathBot V1 CZ";
             versionLanguage.textContent = "CZ";
-
             czOption.classList.add("active");
             enOption.classList.remove("active");
-
         }
-
 
         if (language === "EN") {
-
             languageLabel.textContent = "V1 EN";
-
             heroDownload.href = "MathBotEN.zip";
             downloadButton.href = "MathBotEN.zip";
-
-            heroDownload.textContent =
-                "⬇️ Download MathBot V1 EN";
-
-            downloadButton.textContent =
-                "⬇️ Download MathBot V1 EN";
-
+            heroDownload.textContent = "⬇️ Download MathBot V1 EN";
+            downloadButton.textContent = "⬇️ Download MathBot V1 EN";
             versionLanguage.textContent = "EN";
-
             enOption.classList.add("active");
             czOption.classList.remove("active");
-
         }
 
-
-        document
-            .getElementById("languageMenu")
-            .classList.remove("show");
-
+        document.getElementById("languageMenu").classList.remove("show");
     }
 
-
-    // Kliknutí mimo menu ho zavře
-
     document.addEventListener("click", function(event) {
-
-        const logo =
-            document.querySelector(".logo");
-
-        const menu =
-            document.getElementById("languageMenu");
-
+        const logo = document.querySelector(".logo");
+        const menu = document.getElementById("languageMenu");
         if (!logo.contains(event.target)) {
-
             menu.classList.remove("show");
-
         }
-
     });
-
 </script>
 
 </body>
-
 </html>
