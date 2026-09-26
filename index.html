@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>MathBot — Matematika jednoduše</title>
+
 <link rel="icon" type="image/x-icon" href="icon.ico">
 
 <style>
+
     * {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
 
     html {
@@ -22,65 +25,113 @@
     body {
         font-family: Arial, sans-serif;
         color: white;
-        min-height: 100vh;
+        background: #080808;
+        overflow-x: hidden;
+    }
+
+    /* =========================
+       BACKGROUND
+    ========================= */
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
 
         background:
             linear-gradient(
                 rgba(0, 0, 0, 0.65),
-                rgba(0, 0, 0, 0.8)
+                rgba(0, 0, 0, 0.85)
             ),
             url("background.gif");
 
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
+
+        z-index: -2;
     }
 
-    /* NAVBAR */
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+
+        background: radial-gradient(
+            circle at center,
+            transparent,
+            rgba(0, 0, 0, 0.5)
+        );
+
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
 
     nav {
         position: fixed;
+
         top: 0;
         left: 0;
         right: 0;
 
-        z-index: 10;
+        height: 70px;
 
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
 
-        padding: 18px 7%;
+        padding: 0 7%;
 
-        background: rgba(0, 0, 0, 0.45);
+        background: rgba(10, 10, 10, 0.75);
+
         backdrop-filter: blur(15px);
 
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+        z-index: 100;
     }
 
     .logo {
         font-size: 24px;
         font-weight: bold;
+
+        white-space: nowrap;
     }
 
     .logo span {
+        font-size: 13px;
         opacity: 0.5;
+        margin-left: 5px;
     }
 
-    nav a {
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .nav-links a {
         color: white;
         text-decoration: none;
-        margin-left: 25px;
-        opacity: 0.8;
+
+        font-size: 16px;
+        font-weight: bold;
+
+        opacity: 0.75;
 
         transition: 0.2s;
     }
 
-    nav a:hover {
+    .nav-links a:hover {
         opacity: 1;
+        transform: translateY(-2px);
     }
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
         min-height: 100vh;
@@ -91,53 +142,69 @@
 
         text-align: center;
 
-        padding: 120px 20px 70px;
+        padding: 120px 20px 80px;
     }
 
     .hero-content {
-        max-width: 800px;
+        max-width: 850px;
     }
 
     .badge {
         display: inline-block;
 
-        padding: 8px 15px;
-        margin-bottom: 20px;
+        padding: 9px 18px;
+
+        margin-bottom: 25px;
 
         border-radius: 50px;
 
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255, 255, 255, 0.08);
+
+        border: 1px solid rgba(255, 255, 255, 0.18);
 
         font-size: 14px;
+
+        backdrop-filter: blur(10px);
     }
 
     h1 {
-        font-size: clamp(55px, 10vw, 100px);
-        margin-bottom: 15px;
+        font-size: clamp(60px, 11vw, 110px);
+
+        margin-bottom: 20px;
+
+        letter-spacing: -4px;
 
         background: linear-gradient(
             90deg,
-            #ffffff,
-            #9c9c9c
+            white,
+            #bdbdbd
         );
 
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
-    .hero p {
+    .hero-description {
         font-size: 22px;
-        opacity: 0.75;
+
+        line-height: 1.6;
+
+        color: rgba(255, 255, 255, 0.7);
+
         margin-bottom: 35px;
     }
 
-    /* BUTTONS */
+    /* =========================
+       BUTTONS
+    ========================= */
 
     .buttons {
         display: flex;
+
         justify-content: center;
+
         gap: 15px;
+
         flex-wrap: wrap;
     }
 
@@ -149,42 +216,73 @@
         border-radius: 12px;
 
         text-decoration: none;
-        font-weight: bold;
+
         font-size: 17px;
+
+        font-weight: bold;
 
         transition: 0.25s;
     }
 
     .primary {
-        background: white;
         color: black;
+        background: white;
 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.4);
     }
 
     .secondary {
         color: white;
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
+
+        background: rgba(255, 255, 255, 0.08);
+
+        border: 1px solid rgba(255, 255, 255, 0.18);
+
+        backdrop-filter: blur(10px);
     }
 
     .button:hover {
-        transform: translateY(-4px);
+        transform: translateY(-4px) scale(1.02);
     }
 
-    /* FEATURES */
+    /* =========================
+       SECTIONS
+    ========================= */
 
-    .features {
-        padding: 80px 7%;
+    section {
+        scroll-margin-top: 90px;
+    }
+
+    .section {
         max-width: 1200px;
+
         margin: auto;
+
+        padding: 100px 30px;
     }
 
     .section-title {
         text-align: center;
-        font-size: 40px;
-        margin-bottom: 45px;
+
+        font-size: 42px;
+
+        margin-bottom: 15px;
     }
+
+    .section-description {
+        text-align: center;
+
+        color: rgba(255, 255, 255, 0.6);
+
+        margin-bottom: 50px;
+
+        font-size: 18px;
+    }
+
+    /* =========================
+       FEATURES
+    ========================= */
 
     .cards {
         display: grid;
@@ -198,100 +296,154 @@
     .card {
         padding: 30px;
 
-        background: rgba(255,255,255,0.08);
+        min-height: 200px;
 
-        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255, 255, 255, 0.07);
 
-        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.13);
 
-        backdrop-filter: blur(12px);
+        border-radius: 22px;
+
+        backdrop-filter: blur(15px);
 
         transition: 0.25s;
     }
 
     .card:hover {
-        transform: translateY(-7px);
-        background: rgba(255,255,255,0.12);
+        transform: translateY(-8px);
+
+        background: rgba(255, 255, 255, 0.11);
+
+        border-color: rgba(255, 255, 255, 0.25);
     }
 
     .card-icon {
-        font-size: 35px;
-        margin-bottom: 15px;
+        font-size: 40px;
+
+        margin-bottom: 18px;
     }
 
     .card h3 {
-        margin-bottom: 10px;
         font-size: 22px;
-    }
 
-    .card p {
-        opacity: 0.65;
-        line-height: 1.5;
-    }
-
-    /* DOWNLOAD */
-
-    .download-section {
-        text-align: center;
-
-        padding: 100px 20px;
-    }
-
-    .download-box {
-        max-width: 700px;
-        margin: auto;
-
-        padding: 50px 30px;
-
-        border-radius: 25px;
-
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.15);
-
-        backdrop-filter: blur(15px);
-    }
-
-    .download-box h2 {
-        font-size: 35px;
         margin-bottom: 12px;
     }
 
+    .card p {
+        color: rgba(255, 255, 255, 0.6);
+
+        line-height: 1.5;
+    }
+
+    /* =========================
+       DOWNLOAD
+    ========================= */
+
+    .download-section {
+        max-width: 800px;
+
+        margin: auto;
+
+        padding: 100px 30px;
+
+        text-align: center;
+    }
+
+    .download-box {
+        padding: 55px 30px;
+
+        background: rgba(255, 255, 255, 0.08);
+
+        border: 1px solid rgba(255, 255, 255, 0.15);
+
+        border-radius: 25px;
+
+        backdrop-filter: blur(15px);
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .download-box h2 {
+        font-size: 38px;
+
+        margin-bottom: 15px;
+    }
+
     .download-box p {
-        opacity: 0.65;
-        margin-bottom: 25px;
+        color: rgba(255, 255, 255, 0.6);
+
+        font-size: 18px;
+
+        line-height: 1.5;
+
+        margin-bottom: 30px;
     }
 
     .version {
-        margin-top: 18px;
+        margin-top: 20px;
+
         font-size: 14px;
-        opacity: 0.45;
+
+        color: rgba(255, 255, 255, 0.4);
     }
 
-    /* FOOTER */
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
         text-align: center;
 
-        padding: 30px;
+        padding: 35px 20px;
 
-        border-top: 1px solid rgba(255,255,255,0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
 
-        opacity: 0.5;
+        color: rgba(255, 255, 255, 0.45);
+
+        font-size: 14px;
     }
 
-    /* MOBILE */
+    /* =========================
+       MOBILE
+    ========================= */
 
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
 
         nav {
-            padding: 15px 20px;
+            padding: 0 15px;
+
+            height: auto;
+
+            min-height: 70px;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
-        nav div:last-child {
-            display: none;
+        .nav-links {
+            gap: 15px;
         }
 
-        .hero p {
+        .nav-links a {
+            font-size: 14px;
+        }
+
+        .hero {
+            padding-top: 150px;
+        }
+
+        h1 {
+            letter-spacing: -2px;
+        }
+
+        .hero-description {
             font-size: 18px;
         }
 
@@ -299,10 +451,12 @@
             font-size: 32px;
         }
 
-        .download-box {
-            padding: 35px 20px;
+        .download-box h2 {
+            font-size: 30px;
         }
+
     }
+
 </style>
 ```
 
@@ -311,21 +465,39 @@
 <body>
 
 ```
-<!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <nav>
+
     <div class="logo">
-        🤖 MathBot <span>V1</span>
+        🤖 MathBot
+        <span>V1</span>
     </div>
 
-    <div>
-        <a href="#funkce">Funkce</a>
-        <a href="#download">Download</a>
+    <div class="nav-links">
+
+        <a href="#funkce">
+            Funkce
+        </a>
+
+        <a href="#download">
+            Download
+        </a>
+
+        <a href="https://github.com/bestrohlik">
+            GitHub
+        </a>
+
     </div>
+
 </nav>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -335,10 +507,13 @@
             🚀 MathBot V1
         </div>
 
-        <h1>MathBot</h1>
+        <h1>
+            MathBot
+        </h1>
 
-        <p>
+        <p class="hero-description">
             Tvůj matematický pomocník.
+            <br>
             Jednoduše. Rychle. Bez zbytečností.
         </p>
 
@@ -356,7 +531,7 @@
                 class="button secondary"
                 href="#funkce"
             >
-                Zjistit více
+                🔍 Zjistit více
             </a>
 
         </div>
@@ -366,48 +541,34 @@
 </section>
 
 
-<!-- FEATURES -->
+<!-- =========================
+     FEATURES
+========================= -->
 
-<section class="features" id="funkce">
+<section
+    class="section"
+    id="funkce"
+>
 
     <h2 class="section-title">
         Co MathBot umí?
     </h2>
 
+    <p class="section-description">
+        Funkce dostupné v MathBotu.
+    </p>
+
     <div class="cards">
 
-        <div class="card">
-
-            <div class="card-icon">🧮</div>
-
-            <h3>Kalkulačka</h3>
-
-            <p>
-                Rychlé matematické výpočty
-                přímo v MathBotu.
-            </p>
-
-        </div>
-
 
         <div class="card">
 
-            <div class="card-icon">✖️</div>
+            <div class="card-icon">
+                🧮
+            </div>
 
-            <h3>Násobilka</h3>
-
-            <p>
-                Procvičuj násobilku
-                a zlepšuj své výsledky.
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-icon">⭐</div>
-
-            <h3>XP systém</h3>
+            <h3>
+                Kalkulačka
+            </h3>
 
             <p>
-                Získávej zk
