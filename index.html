@@ -397,6 +397,9 @@
             <button class="language-option" id="enOption" onclick="selectLanguage('EN', event)">
                 🇬🇧 MathBot V1 EN
             </button>
+            <button class="language-option" id="en101Option" onclick="selectLanguage('EN101', event)">
+                🇬🇧 MathBot V1.0.1 EN
+            </button>
         </div>
     </div>
 
@@ -413,7 +416,7 @@
 
 <section class="hero">
     <div class="hero-content">
-        <div class="badge">🚀 MathBot V1</div>
+        <div class="badge" id="heroBadge">🚀 MathBot V1</div>
         <h1>MathBot</h1>
         <p class="hero-description">
             Tvůj matematický pomocník.<br>
@@ -486,7 +489,7 @@
         </a>
 
         <div class="version">
-            MathBot V1 • <span id="versionLanguage">CZ</span> • PC
+            MathBot <span id="versionLabel">V1</span> • <span id="versionLanguage">CZ</span> • PC
         </div>
     </div>
 </section>
@@ -511,29 +514,52 @@
         const heroDownload = document.getElementById("heroDownload");
         const downloadButton = document.getElementById("downloadButton");
         const versionLanguage = document.getElementById("versionLanguage");
+        const versionLabel = document.getElementById("versionLabel");
+        const heroBadge = document.getElementById("heroBadge");
+
         const czOption = document.getElementById("czOption");
         const enOption = document.getElementById("enOption");
+        const en101Option = document.getElementById("en101Option");
+
+        // Resetování stavu active u všech tlačítek
+        czOption.classList.remove("active");
+        enOption.classList.remove("active");
+        en101Option.classList.remove("active");
 
         if (language === "CZ") {
             languageLabel.textContent = "V1 CZ";
+            heroBadge.textContent = "🚀 MathBot V1";
             heroDownload.href = "MathBot.zip";
             downloadButton.href = "MathBot.zip";
             heroDownload.textContent = "⬇️ Stáhnout MathBot V1 CZ";
             downloadButton.textContent = "⬇️ Stáhnout MathBot V1 CZ";
+            versionLabel.textContent = "V1";
             versionLanguage.textContent = "CZ";
             czOption.classList.add("active");
-            enOption.classList.remove("active");
         }
 
         if (language === "EN") {
             languageLabel.textContent = "V1 EN";
+            heroBadge.textContent = "🚀 MathBot V1";
             heroDownload.href = "MathBotEN.zip";
             downloadButton.href = "MathBotEN.zip";
             heroDownload.textContent = "⬇️ Download MathBot V1 EN";
             downloadButton.textContent = "⬇️ Download MathBot V1 EN";
+            versionLabel.textContent = "V1";
             versionLanguage.textContent = "EN";
             enOption.classList.add("active");
-            czOption.classList.remove("active");
+        }
+
+        if (language === "EN101") {
+            languageLabel.textContent = "V1.0.1 EN";
+            heroBadge.textContent = "🚀 MathBot V1.0.1";
+            heroDownload.href = "MathBotEN101.zip";
+            downloadButton.href = "MathBotEN101.zip";
+            heroDownload.textContent = "⬇️ Download MathBot V1.0.1 EN";
+            downloadButton.textContent = "⬇️ Download MathBot V1.0.1 EN";
+            versionLabel.textContent = "V1.0.1";
+            versionLanguage.textContent = "EN";
+            en101Option.classList.add("active");
         }
 
         document.getElementById("languageMenu").classList.remove("show");
