@@ -9,15 +9,9 @@
     <link rel="icon" type="image/x-icon" href="icon.ico">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: Arial, sans-serif;
@@ -28,372 +22,232 @@
 
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 70px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             padding: 0 7%;
-
             background: rgba(10, 10, 10, 0.75);
             backdrop-filter: blur(15px);
-
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-
             z-index: 1000;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
-
             white-space: nowrap;
             cursor: pointer;
-
             position: relative;
-
             display: inline-flex;
             align-items: center;
-
             user-select: none;
         }
 
-        .logo span {
-            font-size: 13px;
-            opacity: 0.5;
-            margin-left: 5px;
-        }
+        .logo span { font-size: 13px; opacity: 0.5; margin-left: 5px; }
 
         .language-menu {
             position: absolute;
-
             top: calc(100% + 10px);
             left: 0;
-
             width: max-content;
             min-width: 220px;
-
             padding: 8px;
-
             background: #141414;
-
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 14px;
-
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-
             display: none;
             flex-direction: column;
-
             gap: 4px;
-
             z-index: 1001;
         }
 
-        .language-menu.show {
-            display: flex;
-        }
+        .language-menu.show { display: flex; }
 
         .language-option {
             width: 100%;
-
             padding: 10px 14px;
-
             border: none;
             border-radius: 9px;
-
             background: transparent;
             color: white;
-
             text-align: left;
-
             font-size: 15px;
-
             cursor: pointer;
-
             transition: background 0.2s;
-
             white-space: nowrap;
-
             display: flex;
             align-items: center;
-
             gap: 8px;
         }
 
-        .language-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+        .language-option:hover { background: rgba(255, 255, 255, 0.1); }
 
         .language-option.active {
             background: rgba(255, 255, 255, 0.18);
             font-weight: bold;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
+        .nav-links { display: flex; gap: 25px; }
 
         .nav-links a {
             color: white;
             text-decoration: none;
-
             font-size: 16px;
             font-weight: bold;
-
             opacity: 0.75;
-
             transition: 0.2s;
         }
 
-        .nav-links a:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
+        .nav-links a:hover { opacity: 1; transform: translateY(-2px); }
 
         .hero {
             min-height: 100vh;
-
             display: flex;
             justify-content: center;
             align-items: center;
-
             text-align: center;
-
             padding: 120px 20px 80px;
         }
 
-        .hero-content {
-            max-width: 850px;
-        }
+        .hero-content { max-width: 850px; }
 
         .badge {
             display: inline-block;
-
             padding: 9px 18px;
-
             margin-bottom: 25px;
-
             border-radius: 50px;
-
             background: rgba(255, 255, 255, 0.08);
-
             border: 1px solid rgba(255, 255, 255, 0.18);
-
             font-size: 14px;
-
             backdrop-filter: blur(10px);
         }
 
         h1 {
             font-size: clamp(60px, 11vw, 110px);
-
             margin-bottom: 20px;
-
             letter-spacing: -4px;
-
-            background: linear-gradient(
-                90deg,
-                white,
-                #bdbdbd
-            );
-
+            background: linear-gradient(90deg, white, #bdbdbd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-description {
             font-size: 22px;
-
             line-height: 1.6;
-
             color: rgba(255, 255, 255, 0.7);
-
             margin-bottom: 35px;
         }
 
         .buttons {
             display: flex;
-
             justify-content: center;
-
             gap: 15px;
-
             flex-wrap: wrap;
         }
 
         .button {
             display: inline-block;
-
             padding: 15px 28px;
-
             border-radius: 12px;
-
             text-decoration: none;
-
             font-size: 17px;
-
             font-weight: bold;
-
             transition: 0.25s;
         }
 
         .primary {
             color: black;
-
             background: white;
-
-            box-shadow:
-                0 10px 35px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
         }
 
         .secondary {
             color: white;
-
             background: rgba(255, 255, 255, 0.08);
-
             border: 1px solid rgba(255, 255, 255, 0.18);
-
             backdrop-filter: blur(10px);
         }
 
-        .button:hover {
-            transform: translateY(-4px) scale(1.02);
-        }
+        .button:hover { transform: translateY(-4px) scale(1.02); }
 
-        section {
-            scroll-margin-top: 90px;
-        }
+        section { scroll-margin-top: 90px; }
 
         .section {
             max-width: 1200px;
-
             margin: auto;
-
             padding: 100px 30px;
         }
 
         .section-title {
             text-align: center;
-
             font-size: 42px;
-
             margin-bottom: 15px;
         }
 
         .section-description {
             text-align: center;
-
             color: rgba(255, 255, 255, 0.6);
-
             margin-bottom: 50px;
-
             font-size: 18px;
         }
 
         .cards {
             display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
-
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
 
         .card {
             padding: 30px;
-
             min-height: 200px;
-
             background: rgba(255, 255, 255, 0.07);
-
             border: 1px solid rgba(255, 255, 255, 0.13);
-
             border-radius: 22px;
-
             backdrop-filter: blur(15px);
-
             transition: 0.25s;
         }
 
         .card:hover {
             transform: translateY(-8px);
-
             background: rgba(255, 255, 255, 0.11);
-
-            border-color:
-                rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
-        .card-icon {
-            font-size: 40px;
+        .card-icon { font-size: 40px; margin-bottom: 18px; }
 
-            margin-bottom: 18px;
-        }
+        .card h3 { font-size: 22px; margin-bottom: 12px; }
 
-        .card h3 {
-            font-size: 22px;
+        .card p { color: rgba(255, 255, 255, 0.6); line-height: 1.5; }
 
-            margin-bottom: 12px;
-        }
+        .dlc-card { cursor: pointer; }
 
-        .card p {
-            color: rgba(255, 255, 255, 0.6);
-
-            line-height: 1.5;
-        }
-
-        .dlc-card {
-            cursor: pointer;
-        }
-
-        .dlc-card .button {
-            margin-top: 20px;
-        }
+        .dlc-card .button { margin-top: 20px; }
 
         .download-section {
             max-width: 800px;
-
             margin: auto;
-
             padding: 100px 30px;
-
             text-align: center;
         }
 
         .download-box {
             padding: 55px 30px;
-
             background: rgba(255, 255, 255, 0.08);
-
             border: 1px solid rgba(255, 255, 255, 0.15);
-
             border-radius: 25px;
-
             backdrop-filter: blur(15px);
-
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .download-box h2 {
-            font-size: 38px;
-
-            margin-bottom: 15px;
-        }
+        .download-box h2 { font-size: 38px; margin-bottom: 15px; }
 
         .download-box p {
             color: rgba(255, 255, 255, 0.6);
-
             font-size: 18px;
-
             line-height: 1.5;
-
             margin-bottom: 30px;
         }
 
@@ -401,103 +255,55 @@
 
         .update-box {
             margin-top: 30px;
-
             padding: 35px 30px;
-
             background: rgba(255, 255, 255, 0.06);
-
             border: 1px solid rgba(255, 255, 255, 0.13);
-
             border-radius: 22px;
-
             backdrop-filter: blur(15px);
-
             text-align: left;
         }
 
-        .update-box h3 {
-            font-size: 28px;
-
-            margin-bottom: 15px;
-        }
+        .update-box h3 { font-size: 28px; margin-bottom: 15px; }
 
         .update-box .update-version {
             color: rgba(255, 255, 255, 0.45);
-
             font-size: 14px;
-
             margin-bottom: 20px;
         }
 
         .update-box ul {
             padding-left: 25px;
-
             color: rgba(255, 255, 255, 0.7);
-
             line-height: 1.8;
         }
 
-        .update-box li {
-            margin-bottom: 5px;
-        }
+        .update-box li { margin-bottom: 5px; }
 
         footer {
             text-align: center;
-
             padding: 35px 20px;
-
-            border-top:
-                1px solid rgba(255, 255, 255, 0.1);
-
-            color:
-                rgba(255, 255, 255, 0.45);
-
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.45);
             font-size: 14px;
         }
 
         @media (max-width: 650px) {
-
             nav {
                 padding: 10px 15px;
-
                 height: auto;
-
                 min-height: 70px;
-
                 flex-wrap: wrap;
-
                 justify-content: space-between;
             }
 
-            .nav-links {
-                gap: 15px;
-            }
-
-            .nav-links a {
-                font-size: 14px;
-            }
-
-            .hero {
-                padding-top: 150px;
-            }
-
-            h1 {
-                letter-spacing: -2px;
-            }
-
-            .hero-description {
-                font-size: 18px;
-            }
-
-            .section-title {
-                font-size: 32px;
-            }
-
-            .download-box h2 {
-                font-size: 30px;
-            }
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 14px; }
+            .hero { padding-top: 150px; }
+            h1 { letter-spacing: -2px; }
+            .hero-description { font-size: 18px; }
+            .section-title { font-size: 32px; }
+            .download-box h2 { font-size: 30px; }
         }
-
     </style>
 </head>
 
@@ -509,17 +315,20 @@
 
         🚀 MathBot
 
-        <span id="languageLabel">
-            V1 CZ
-        </span>
+        <span id="languageLabel">V1.0.2 CZ</span>
 
-        <div
-            class="language-menu"
-            id="languageMenu"
-        >
+        <div class="language-menu" id="languageMenu">
 
             <button
                 class="language-option active"
+                id="cz102Option"
+                onclick="selectLanguage('CZ102', event)"
+            >
+                🇨🇿 MathBot V1.0.2 CZ
+            </button>
+
+            <button
+                class="language-option"
                 id="czOption"
                 onclick="selectLanguage('CZ', event)"
             >
@@ -555,26 +364,10 @@
     </div>
 
     <div class="nav-links">
-
-        <a href="#funkce">
-            Funkce
-        </a>
-
-        <a href="#dlc">
-            DLC
-        </a>
-
-        <a href="#download">
-            Download
-        </a>
-
-        <a
-            href="https://github.com/bestrohlik"
-            target="_blank"
-        >
-            GitHub
-        </a>
-
+        <a href="#funkce">Funkce</a>
+        <a href="#dlc">DLC</a>
+        <a href="#download">Download</a>
+        <a href="https://github.com/bestrohlik" target="_blank">GitHub</a>
     </div>
 
 </nav>
@@ -586,24 +379,15 @@
 
     <div class="hero-content">
 
-        <div
-            class="badge"
-            id="heroBadge"
-        >
-            🚀 MathBot V1
+        <div class="badge" id="heroBadge">
+            🚀 MathBot V1.0.2
         </div>
 
-        <h1>
-            MathBot
-        </h1>
+        <h1>MathBot</h1>
 
         <p class="hero-description">
-
             Tvůj matematický pomocník.<br>
-
-            Jednoduše. Rychle. Offline.
-            Bez zbytečností.
-
+            Jednoduše. Rychle. Offline. Bez zbytečností.
         </p>
 
         <div class="buttons">
@@ -611,16 +395,13 @@
             <a
                 class="button primary"
                 id="heroDownload"
-                href="MathBot.zip"
+                href="MathBot_V1_2_CZ.zip"
                 download
             >
-                ⬇️ Stáhnout MathBot V1 CZ
+                ⬇️ Stáhnout MathBot V1.0.2 CZ
             </a>
 
-            <a
-                class="button secondary"
-                href="#funkce"
-            >
+            <a class="button secondary" href="#funkce">
                 🔍 Zjistit více
             </a>
 
@@ -633,104 +414,42 @@
 
 <!-- FUNKCE -->
 
-<section
-    class="section"
-    id="funkce"
->
+<section class="section" id="funkce">
 
-    <h2 class="section-title">
-        Co MathBot umí?
-    </h2>
+    <h2 class="section-title">Co MathBot umí?</h2>
 
-    <p class="section-description">
-        Funkce dostupné v MathBotu.
-    </p>
+    <p class="section-description">Funkce dostupné v MathBotu.</p>
 
     <div class="cards">
 
         <div class="card">
-
-            <div class="card-icon">
-                🧮
-            </div>
-
-            <h3>
-                Kalkulačka
-            </h3>
-
-            <p>
-                Rychlé matematické výpočty.
-            </p>
-
+            <div class="card-icon">🧮</div>
+            <h3>Kalkulačka</h3>
+            <p>Rychlé matematické výpočty.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                ✖️
-            </div>
-
-            <h3>
-                Násobilkovač
-            </h3>
-
-            <p>
-                Procvičování násobilky.
-            </p>
-
+            <div class="card-icon">✖️</div>
+            <h3>Násobilkovač</h3>
+            <p>Procvičování násobilky.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                📝
-            </div>
-
-            <h3>
-                Příklady
-            </h3>
-
-            <p>
-                Řeš náhodné matematické příklady.
-            </p>
-
+            <div class="card-icon">📝</div>
+            <h3>Příklady</h3>
+            <p>Řeš náhodné matematické příklady.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                ⭐
-            </div>
-
-            <h3>
-                XP systém
-            </h3>
-
-            <p>
-                Získávej XP za vyřešené příklady.
-                +140 XP na začátek.
-            </p>
-
+            <div class="card-icon">⭐</div>
+            <h3>XP systém</h3>
+            <p>Získávej XP za vyřešené příklady. +140 XP na začátek.</p>
         </div>
 
-
         <div class="card">
-
-            <div class="card-icon">
-                📊
-            </div>
-
-            <h3>
-                Statistiky
-            </h3>
-
-            <p>
-                Sleduj svůj pokrok a výsledky.
-            </p>
-
+            <div class="card-icon">📊</div>
+            <h3>Statistiky</h3>
+            <p>Sleduj svůj pokrok a výsledky.</p>
         </div>
 
     </div>
@@ -740,30 +459,19 @@
 
 <!-- DLC -->
 
-<section
-    class="section"
-    id="dlc"
->
+<section class="section" id="dlc">
 
-    <h2 class="section-title">
-        DLC
-    </h2>
+    <h2 class="section-title">DLC</h2>
 
-    <p class="section-description">
-        Rozšiř svůj MathBot o nové herní režimy.
-    </p>
+    <p class="section-description">Rozšiř svůj MathBot o nové herní režimy.</p>
 
     <div class="cards">
 
         <div class="card dlc-card">
 
-            <div class="card-icon">
-                👾
-            </div>
+            <div class="card-icon">👾</div>
 
-            <h3>
-                Endless Mode
-            </h3>
+            <h3>Endless Mode</h3>
 
             <p>
                 Nekonečný matematický režim,
@@ -771,11 +479,7 @@
                 postupně zvyšují.
             </p>
 
-            <a
-                class="button primary"
-                href="MathBotEndlessDLC.zip"
-                download
-            >
+            <a class="button primary" href="MathBotEndlessDLC.zip" download>
                 ⬇️ Stáhnout DLC
             </a>
 
@@ -788,16 +492,11 @@
 
 <!-- DOWNLOAD -->
 
-<section
-    class="download-section"
-    id="download"
->
+<section class="download-section" id="download">
 
     <div class="download-box">
 
-        <h2>
-            Stáhni si MathBot
-        </h2>
+        <h2>Stáhni si MathBot</h2>
 
         <p>
             Vyzkoušej MathBot na svém počítači
@@ -807,25 +506,18 @@
         <a
             class="button primary"
             id="downloadButton"
-            href="MathBot.zip"
+            href="MathBot_V1_2_CZ.zip"
             download
         >
-            ⬇️ Stáhnout MathBot V1 CZ
+            ⬇️ Stáhnout MathBot V1.0.2 CZ
         </a>
 
         <div class="version">
 
             MathBot
-            <span id="versionLabel">
-                V1
-            </span>
-
+            <span id="versionLabel">V1.0.2</span>
             •
-            
-            <span id="versionLanguage">
-                CZ
-            </span>
-
+            <span id="versionLanguage">CZ</span>
             • PC
 
         </div>
@@ -835,14 +527,12 @@
 
         <div class="update-box">
 
-            <h3>
-                🆕 Nová verze MathBot V1.0.1
-            </h3>
+            <h3>🆕 Nová verze MathBot V1.0.1</h3>
 
             <div class="update-version">
                 Co přidává nová verze V1.0.1?
             </div>
-            
+
             <ul>
 
                 <li>
@@ -869,261 +559,132 @@
 <!-- FOOTER -->
 
 <footer>
-
     MathBot • Matematika jednodušeji 🚀
-
 </footer>
 
 
 <script>
 
-    let selectedLanguage = "CZ";
+    let selectedLanguage = "CZ102";
+
+    const versions = {
+        CZ102: {
+            option: "cz102Option",
+            label: "V1.0.2 CZ",
+            badge: "🚀 MathBot V1.0.2",
+            file: "MathBot_V1_2_CZ.zip",
+            button: "⬇️ Stáhnout MathBot V1.0.2 CZ",
+            version: "V1.0.2",
+            lang: "CZ"
+        },
+        CZ: {
+            option: "czOption",
+            label: "V1 CZ",
+            badge: "🚀 MathBot V1",
+            file: "MathBot.zip",
+            button: "⬇️ Stáhnout MathBot V1 CZ",
+            version: "V1",
+            lang: "CZ"
+        },
+        CZ101: {
+            option: "cz101Option",
+            label: "V1.01 CZ",
+            badge: "🚀 MathBot V1.01",
+            file: "MathBot101.zip",
+            button: "⬇️ Stáhnout MathBot V1.01 CZ",
+            version: "V1.01",
+            lang: "CZ"
+        },
+        EN: {
+            option: "enOption",
+            label: "V1 EN",
+            badge: "🚀 MathBot V1",
+            file: "MathBotEN.zip",
+            button: "⬇️ Download MathBot V1 EN",
+            version: "V1",
+            lang: "EN"
+        },
+        EN101: {
+            option: "en101Option",
+            label: "V1.0.1 EN",
+            badge: "🚀 MathBot V1.0.1",
+            file: "MathBotEN101.zip",
+            button: "⬇️ Download MathBot V1.0.1 EN",
+            version: "V1.0.1",
+            lang: "EN"
+        }
+    };
 
 
     function toggleLanguageMenu() {
 
-        const menu =
-            document.getElementById(
-                "languageMenu"
-            );
-
-        menu.classList.toggle("show");
+        document
+            .getElementById("languageMenu")
+            .classList.toggle("show");
 
     }
 
 
-    function selectLanguage(
-        language,
-        event
-    ) {
+    function selectLanguage(language, event) {
 
-        event.stopPropagation();
+        if (event) {
+            event.stopPropagation();
+        }
+
+        const v = versions[language];
+
+        if (!v) {
+            return;
+        }
 
         selectedLanguage = language;
 
+        document.getElementById("languageLabel").textContent = v.label;
+        document.getElementById("heroBadge").textContent = v.badge;
 
-        const languageLabel =
-            document.getElementById(
-                "languageLabel"
-            );
+        const heroDownload = document.getElementById("heroDownload");
+        const downloadButton = document.getElementById("downloadButton");
 
-        const heroDownload =
-            document.getElementById(
-                "heroDownload"
-            );
+        heroDownload.href = v.file;
+        downloadButton.href = v.file;
 
-        const downloadButton =
-            document.getElementById(
-                "downloadButton"
-            );
+        heroDownload.textContent = v.button;
+        downloadButton.textContent = v.button;
 
-        const versionLanguage =
-            document.getElementById(
-                "versionLanguage"
-            );
+        document.getElementById("versionLabel").textContent = v.version;
+        document.getElementById("versionLanguage").textContent = v.lang;
 
-        const versionLabel =
-            document.getElementById(
-                "versionLabel"
-            );
-
-        const heroBadge =
-            document.getElementById(
-                "heroBadge"
-            );
-
-
-        const czOption =
-            document.getElementById(
-                "czOption"
-            );
-
-        const cz101Option =
-            document.getElementById(
-                "cz101Option"
-            );
-
-        const enOption =
-            document.getElementById(
-                "enOption"
-            );
-
-        const en101Option =
-            document.getElementById(
-                "en101Option"
-            );
-
-
-        czOption.classList.remove("active");
-
-        cz101Option.classList.remove("active");
-
-        enOption.classList.remove("active");
-
-        en101Option.classList.remove("active");
-
-
-        if (language === "CZ") {
-
-            languageLabel.textContent =
-                "V1 CZ";
-
-            heroBadge.textContent =
-                "🚀 MathBot V1";
-
-            heroDownload.href =
-                "MathBot.zip";
-
-            downloadButton.href =
-                "MathBot.zip";
-
-            heroDownload.textContent =
-                "⬇️ Stáhnout MathBot V1 CZ";
-
-            downloadButton.textContent =
-                "⬇️ Stáhnout MathBot V1 CZ";
-
-            versionLabel.textContent =
-                "V1";
-
-            versionLanguage.textContent =
-                "CZ";
-
-            czOption.classList.add("active");
-
-        }
-
-
-        if (language === "CZ101") {
-
-            languageLabel.textContent =
-                "V1.01 CZ";
-
-            heroBadge.textContent =
-                "🚀 MathBot V1.01";
-
-            heroDownload.href =
-                "MathBot101.zip";
-
-            downloadButton.href =
-                "MathBot101.zip";
-
-            heroDownload.textContent =
-                "⬇️ Stáhnout MathBot V1.01 CZ";
-
-            downloadButton.textContent =
-                "⬇️ Stáhnout MathBot V1.01 CZ";
-
-            versionLabel.textContent =
-                "V1.01";
-
-            versionLanguage.textContent =
-                "CZ";
-
-            cz101Option.classList.add("active");
-
-        }
-
-
-        if (language === "EN") {
-
-            languageLabel.textContent =
-                "V1 EN";
-
-            heroBadge.textContent =
-                "🚀 MathBot V1";
-
-            heroDownload.href =
-                "MathBotEN.zip";
-
-            downloadButton.href =
-                "MathBotEN.zip";
-
-            heroDownload.textContent =
-                "⬇️ Download MathBot V1 EN";
-
-            downloadButton.textContent =
-                "⬇️ Download MathBot V1 EN";
-
-            versionLabel.textContent =
-                "V1";
-
-            versionLanguage.textContent =
-                "EN";
-
-            enOption.classList.add("active");
-
-        }
-
-
-        if (language === "EN101") {
-
-            languageLabel.textContent =
-                "V1.0.1 EN";
-
-            heroBadge.textContent =
-                "🚀 MathBot V1.0.1";
-
-            heroDownload.href =
-                "MathBotEN101.zip";
-
-            downloadButton.href =
-                "MathBotEN101.zip";
-
-            heroDownload.textContent =
-                "⬇️ Download MathBot V1.0.1 EN";
-
-            downloadButton.textContent =
-                "⬇️ Download MathBot V1.0.1 EN";
-
-            versionLabel.textContent =
-                "V1.0.1";
-
-            versionLanguage.textContent =
-                "EN";
-
-            en101Option.classList.add("active");
-
-        }
-
+        Object.values(versions).forEach(function (item) {
+            document
+                .getElementById(item.option)
+                .classList.remove("active");
+        });
 
         document
-            .getElementById(
-                "languageMenu"
-            )
+            .getElementById(v.option)
+            .classList.add("active");
+
+        document
+            .getElementById("languageMenu")
             .classList.remove("show");
 
     }
 
 
-    document.addEventListener(
-        "click",
-        function(event) {
+    document.addEventListener("click", function (event) {
 
-            const logo =
-                document.querySelector(
-                    ".logo"
-                );
+        const logo = document.querySelector(".logo");
+        const menu = document.getElementById("languageMenu");
 
-            const menu =
-                document.getElementById(
-                    "languageMenu"
-                );
-
-            if (
-                !logo.contains(
-                    event.target
-                )
-            ) {
-
-                menu.classList.remove(
-                    "show"
-                );
-
-            }
-
+        if (!logo.contains(event.target)) {
+            menu.classList.remove("show");
         }
-    );
+
+    });
+
+
+    // Po otevření stránky nastaví výchozí verzi V1.0.2 CZ
+    selectLanguage(selectedLanguage);
 
 </script>
 
